@@ -84,7 +84,7 @@ def wordle(language='english'):
             if current_row < N_ROWS - 1:
                 gw.set_current_row(current_row + 1)
             else:
-                gw.show_message("No more rows. Game over.")
+                gw.show_message(f"Game Over. The word was {solution_word}")
 
     if language == 'english':
         gw = WordleGWindow()
