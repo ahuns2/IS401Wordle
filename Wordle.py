@@ -8,8 +8,9 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 import random
 from WordleDictionary import FIVE_LETTER_WORDS
 from RussianWordleDictionary import RUSSIAN_WORD_LIST
-from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
+from WordleGraphics import WordleGWindow, RussianWordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 from tkinter import messagebox
+
 
 def wordle(language='english'):
     if language == 'english':
@@ -85,8 +86,13 @@ def wordle(language='english'):
             else:
                 gw.show_message("No more rows. Game over.")
 
-    gw = WordleGWindow()
-    gw.add_enter_listener(enter_action)
+    if language == 'english':
+        gw = WordleGWindow()
+        gw.add_enter_listener(enter_action)
+    else:
+        gw = RussianWordleGWindow()
+        gw.add_enter_listener(enter_action)
+
 
 # Startup code
 
