@@ -7,13 +7,21 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 
 import random
 from WordleDictionary import FIVE_LETTER_WORDS
+from RussianWordleDictionary import RUSSIAN_WORD_LIST
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 from tkinter import messagebox
 
-def wordle():
+def wordle(language='english'):
+    if language == 'english':
+        word_list = FIVE_LETTER_WORDS
+    elif language == 'russian':
+        filtered_words = [word for word in RUSSIAN_WORD_LIST if len(word) == 5]
+        word_list = filtered_words
+    else:
+        raise ValueError("Invalid language selection")
 
     # Generate the solution word once at the beginning of the game
-    solution_word = FIVE_LETTER_WORDS[random.randint(0, len(FIVE_LETTER_WORDS) - 1)]
+    solution_word = random.choice(word_list)
 
     def enter_action(s):
         if evaluate_word(s):
@@ -21,7 +29,7 @@ def wordle():
 
     def evaluate_word(word):
         # Check if the entered word is a legitimate English word
-        if word.lower() in FIVE_LETTER_WORDS:
+        if word.lower() in word_list:
             return True
         else:
             gw.show_message("Please enter a valid word")
@@ -83,6 +91,12 @@ def wordle():
 # Startup code
 
 if __name__ == "__main__":
+    language_choice = messagebox.askquestion("Language Selection", "Do you want to play the game in Russian?\n(If you select 'no' the game will be played in english)")
+    if language_choice == 'yes':
+        language = 'russian'
+    else:
+        language = 'english'
+
     question = messagebox.askquestion("Colorblind Mode", "Do you want to turn on colorblind mode?\nThis will toggle a High Contrast color set")
     if question == 'yes':
         CORRECT_COLOR = '#FFA500'
@@ -90,4 +104,5 @@ if __name__ == "__main__":
         print('colorblind mode on.')
     else:
         print('colorblind mode off')
-    wordle()
+        
+    wordle(language)
